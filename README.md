@@ -1,35 +1,26 @@
-# Switch Statement Compiler Front End (C)
+# Modular Switch Statement Compiler + Single GUI
 
-A teaching-oriented C11 compiler front end for a restricted C-like language. It demonstrates tokenization, recursive-descent parsing, and semantic checks for `switch`, `case`, `default`, and `break`.
+## Modules
+- `Shared declarations are placed at the top of each C module, so no header file is required.`: shared tokens, AST types and function declarations
+- `lexer.c`: lexical analysis and tokenization
+- `parser.c`: syntax analysis and AST construction
+- `ast.c`: AST creation, printing and memory cleanup
+- `semantic.c`: constant expression evaluation and semantic checks
+- `io.c`: token table and source input
+- `main.c`: compiler pipeline
+- `gui.py`: one single-file Tkinter GUI for the project
 
-## Build
-```bash
-gcc -std=c11 -Wall -Wextra -pedantic switch_compiler.c -o switch_compiler
-```
+## Compile manually
+Linux:
+`gcc -std=c11 -Wall -Wextra -pedantic main.c lexer.c parser.c ast.c semantic.c io.c -o switch_compiler`
+`./switch_compiler`
 
-## Run
-```bash
-./switch_compiler tests/valid_01.c
-```
-On Windows/MinGW use `switch_compiler.exe tests\valid_01.c`. Exit code 0 means no diagnostics, 1 means source errors, and 2 means invocation/file errors.
+Windows MinGW:
+`gcc -std=c11 -Wall -Wextra -pedantic main.c lexer.c parser.c ast.c semantic.c io.c -o switch_compiler.exe`
+`switch_compiler.exe`
 
-## Features
-- Lexical analysis for keywords, identifiers, integer literals, operators, delimiters and comments.
-- Syntax checks for switch labels and break statements.
-- Integer constant-expression evaluation with unary +/− and binary +, −, *, /, %.
-- Duplicate evaluated case detection per switch; duplicate default detection.
-- Basic break-context checking and line-numbered diagnostics.
+## Run GUI
+Keep `gui.py` and all C modules in the same folder, then run `python gui.py`.
+The GUI compiles all C modules together when Compile & Analyze is clicked.
 
-## Files
-- `switch_compiler.c`: implementation
-- `GRAMMAR_AND_CFG.md`: grammar and transformations
-- `AST_AND_PARSE_TREE.md`: sample tree and AST design
-- `SEMANTIC_ANALYSIS.md`: semantic rules and limitations
-- `tests/`: valid and invalid test programs
-- `TEST_RESULTS.md`: actual test outputs
-- `CONTRIBUTIONS.md`: editable team contribution template
-- `presentation.pptx`: project slides
-- `evidence/`: test summary and output evidence
-
-## Limitations
-This is not a complete ISO C compiler. It supports a restricted statement/expression subset, does not perform full C type checking, and currently validates rather than constructing a complete AST. Character literals and all C integer suffix/conversion rules are not fully implemented.
+Use the GUI to manually test valid and invalid programs, then record actual outputs and screenshots in the report.
