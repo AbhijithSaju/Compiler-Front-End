@@ -1,24 +1,3 @@
-/*
- * Refined Switch Statement Compiler Front End
- * -------------------------------------------
- * Features:
- *   1. Lexer: tokenizes a small C-like language.
- *   2. Parser: parses switch/case/default/break and basic expressions.
- *   3. Semantic checks: duplicate constant case labels, duplicate default,
- *      and break outside switch/loop.
- *   4. Dynamic AST construction and readable AST printing.
- *
- * Build:
- *   gcc -std=c11 -Wall -Wextra -pedantic switch_compiler.c -o switch_compiler.exe
- *
- * Run:
- *   switch_compiler.exe
- *   or: switch_compiler.exe input.txt
- *
- * This is an educational compiler front end for a restricted C-like subset,
- * not a complete ISO C compiler.
- */
-
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
@@ -745,7 +724,7 @@ int main(int argc, char **argv) {
         if (!source) return EXIT_FAILURE;
     } else {
         printf("Enter source code below.\n");
-        printf("Finish with Ctrl+Z then Enter on Windows, or Ctrl+D on Linux/macOS.\n\n");
+        printf("Finish with Ctrl+Z then Enter \n\n");
         source = read_stdin_source();
         if (!source) {
             fprintf(stderr, "Unable to allocate input buffer.\n");
@@ -792,8 +771,6 @@ int main(int argc, char **argv) {
             printf("AST generation: partial internal tree discarded from output\n");
         printf("Review the diagnostic messages above.\n");
     }
-    printf("\nNote: this educational front end supports a restricted C-like subset.\n");
-
     free_ast(root);
     free(source);
     return error_count == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
